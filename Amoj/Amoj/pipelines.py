@@ -15,7 +15,7 @@ class AmojPipeline(object):
 
 class MySQLPipeline(object):
 
-    """     just for convenience, should not be used    """
+    """    Synchronization IO， just for convenience, should not be used    """
     def __init__(self):
         self.conn= pymysql.connect(
             host='localhost',
