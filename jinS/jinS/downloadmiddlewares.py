@@ -22,7 +22,31 @@ class RotateUserAgentMiddleware(object):
             request.headers.setdefault(b'User-Agent', user_agent)
 
 
-#TODO(midasevil) class RotateProxyMiddleware(object):
+class RotateProxyMiddleware(object):
+    def __init__(self, proxies = None):
+        self.proxies = proxies
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        f = crawler.settings['PROXY_FILE']
+        with open(f) as f:
+            proxies = f.readlines()
+
+        return cls(proxies)
+
+    def process_request(self, request ,spider):
+        proxy = choice(self.proxies)
+        request.meta['proxy'] = proxy
+
+    def process_response(self, request, response, spider):
+        if response.status != 200:
+            fail_proxy = request.meta['proxy']
+            self.proxies.remove(fail_proxy)
+            proxy = choice(self.proxies)
+            request.meta['proxy'] = proxy
+            return request
+        return response
+
 
 
 
