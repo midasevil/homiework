@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from twisted.enterprise import adbapi
-import MySQLdb
-import MySQLdb.cursors
+import pymysql
+import pymysql.cursors
 
 
 class MySQLPipeline(object):
@@ -17,10 +17,10 @@ class MySQLPipeline(object):
             user=settings['MYSQL_USER'],
             passwd=settings['MYSQL_PASSWD'],
             charset='utf8',
-            cursorclass=MySQLdb.cursors.DictCursor,
+            cursorclass=pymysql.cursors.DictCursor,
             use_unicode=False,
         )
-        dbpool = adbapi.ConnectionPool('MySQLdb', **dbparams)
+        dbpool = adbapi.ConnectionPool('pymysql', **dbparams)
         return cls(dbpool)
 
     def process_item(self,item,spider):
