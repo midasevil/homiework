@@ -1,4 +1,4 @@
-
+操作环境  python 3.5  依赖库 scrapy scrapy-redis pymysql lxml
 
 这是关于爬虫的小作业
 目标在于：
